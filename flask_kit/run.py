@@ -5,7 +5,7 @@ from kit.helpers import get_module
 
 if __name__ == '__main__':
     global_settings = get_module('settings')
-    common_module = getattr(global_settings, 'APP_MODULE', 'common')
+    common_module = getattr(global_settings, 'APP_MODULE', 'app')
     app_module = get_module('{0}.views'.format(common_module))
     app = getattr(app_module, 'app', False)
     if app:

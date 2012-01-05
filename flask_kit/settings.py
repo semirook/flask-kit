@@ -21,6 +21,12 @@ class DevelopmentConfig(BaseConfig):
     TESTING = True
 
 
+# You may decide to rename your main application module (app -> common, for example).
+# Set it's name here ('app' is default)
+
+APP_MODULE = 'app'
+
+
 # If you will use some blueprints in your project (and you have to),
 # register them in INSTALLED_BLUEPRINTS list.
 # For example, if you have blueprint object like
@@ -29,9 +35,3 @@ class DevelopmentConfig(BaseConfig):
 # in INSTALLED_BLUEPRINTS list -> INSTALLED_BLUEPRINTS = ['simple_page']
 
 INSTALLED_BLUEPRINTS = []
-
-
-# You may decide to rename your main application module (app -> common, for example).
-# Set it's name here ('app' is default)
-
-APP_MODULE = 'app'
