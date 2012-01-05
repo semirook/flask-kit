@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from kit import AppFactory
-from settings import DevelopmentConfig
+from flask_kit.helpers import AppFactory
+from flask_kit.settings import DevelopmentConfig
 
 
 # It's your main flask app.
