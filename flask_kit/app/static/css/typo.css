@@ -1,0 +1,52 @@
+/*
+Typo stylesheet
+*/
+
+body {
+    font: normal 62.5% Helvetica, Arial, sans-serif;
+    line-height: 1em;
+    color: #2e3436;
+}
+
+p {
+    margin-bottom: 0.5em;
+    line-height: 1.3em;
+}
+
+strong {
+    color: #555753;
+}
+
+small {
+    font-size: 85%;
+}
+
+sub, sup {
+    line-height: 0;
+    position: relative;
+}
+
+sup {
+    top: -0.25em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+strong {
+    font-weight: bold;
+}
+
+td {
+    vertical-align: top;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin: 1em 0;
+    padding: 0;
+}
