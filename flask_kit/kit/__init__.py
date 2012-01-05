@@ -9,9 +9,9 @@
 
 __version__ = '0.1'
 
-import importlib
 import settings
 from flask import Flask
+from kit.helpers import get_module
 
 
 class AppFactory(object):
@@ -38,10 +38,10 @@ class AppFactory(object):
 
     def get_import_name(self):
         app_module = self._get_app_module()
-        try:
-            module = importlib.import_module('{0}.views'.format(app_module))
+        module = get_module('{0}.views'.format(app_module))
+        if module:
             return module.__name__
-        except ImportError:
+        else:
             raise Exception("Main logic module '{0}.views' not found".format(app_module))
 
     def get_blank_app(self):
@@ -64,12 +64,11 @@ class AppFactory(object):
 
     def _bind_blueprints_to_app(self, blueprints):
         for bp_name in blueprints:
-            try:
-                bp_logic = importlib.import_module('{0}.views'.format(bp_name))
-                bp_obj = getattr(bp_logic, bp_name, False)
-                if bp_obj:
-                    self.app.register_blueprint(bp_obj)
-                else:
-                    raise Exception("No '{0}' blueprint object found in {1}".format(bp_name, bp_logic.__name__))
-            except ImportError:
+            bp_logic = get_module('{0}.views'.format(bp_name))
+            if not bp_logic:
                 raise Exception("'{0}' blueprint module registered in settings.py but not found".format(bp_name))
+            bp_obj = getattr(bp_logic, bp_name, False)
+            if bp_obj:
+                self.app.register_blueprint(bp_obj)
+            else:
+                raise Exception("No '{0}' blueprint object found in {1}".format(bp_name, bp_logic.__name__))
