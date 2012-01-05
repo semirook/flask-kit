@@ -5,3 +5,4 @@ Flask==0.8
 # http://flask.pocoo.org/extensions/
 
 Flask-Gravatar==0.2.3
+Flask-Script==0.3.1
