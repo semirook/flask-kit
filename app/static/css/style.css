@@ -1,0 +1,17 @@
+/*
+Main stylesheet
+*/
+
+.b-greeting {
+    font-size: 3em;
+    line-height: 3em;
+    text-align: center;
+    padding: 1em;
+}
+
+.b-info {
+    font-size: 1.6em;
+    line-height: 1.8em;
+    text-align: center;
+    padding: 1em;
+}

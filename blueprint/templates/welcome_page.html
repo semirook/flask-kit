@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block greetings %}
+    <h1 class="b-greeting"><a href="{{ url_for('main_page') }}">Hello</a> and welcome!</h1>
+{% endblock %}
+
+{% block info %}
+    <div class="b-info">
+        <p><a href="https://github.com/semirook/flask-kit">Flask-Kit</a>
+            is the right way to organize your Flask project when it's becoming complex.
+        </p>
+    </div>
+{% endblock %}

@@ -9,6 +9,9 @@
     </head>
 
     <body>
-
+        {% block greetings %}
+            <h1 class="b-greeting">Hello and <a href="{{ url_for('blueprint.welcome_page') }}">welcome</a>!</h1>
+        {% endblock %}
+        {% block info %}{% endblock %}
     </body>
 </html>

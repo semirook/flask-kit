@@ -34,4 +34,4 @@ APP_MODULE = 'app'
 # in the simple_page blueprint module, put it's name, not the imported object itself,
 # in INSTALLED_BLUEPRINTS list -> INSTALLED_BLUEPRINTS = ['simple_page']
 
-INSTALLED_BLUEPRINTS = []
+INSTALLED_BLUEPRINTS = ['blueprint']
