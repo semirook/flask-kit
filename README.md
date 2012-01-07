@@ -10,7 +10,7 @@ of a Flask project and the set of useful helpers for it.* That's it.
 
 I decided that the most comfortable and the most flexible project file structure for my new Flask-based projects is:
 
-'''
+```
 /project
     /app
         /__init__.py
@@ -26,14 +26,14 @@ I decided that the most comfortable and the most flexible project file structure
         /templates
             index.html
     ...
-'''
+```
 
 New versions of the Flask give us a concept of Blueprints, a simple way to build extendable applications.
 If you're not familiar with them - please, visit [Modular Applications with Blueprints](http://flask.pocoo.org/docs/blueprints/).
 Blueprint encapsulates some logic, models, urls, templates etc. to keep your main app clean and simple to maintain.
 So, with a set of blueprints, the project file structure will be mostly like this:
 
-'''
+```
 /project
     /app
         /__init__.py
@@ -60,7 +60,7 @@ So, with a set of blueprints, the project file structure will be mostly like thi
     /another_blueprint
         ...
     ...
-'''
+```
 
 It's important to remember that Flask is a microframework for small projects and doesn't provide any way to build
 non-micro applications/sites. Maybe, you have already read the [Larger Applications](http://flask.pocoo.org/docs/patterns/packages/),
