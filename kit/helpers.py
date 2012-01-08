@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
+    kit.helpers
+    ~~~~~~~~~~~
+
     Implements some basic kit helpers.
 
     :copyright: (c) 2012 by Roman Semirook.
@@ -14,10 +17,18 @@ from flask import Flask
 import settings
 
 
-NO_MODULE_COMMON_ERROR = """Error: Can't find module {0} and can't work around this error\n"""
+NO_MODULE_COMMON_ERROR = "Can't find module {0}"
 
-NO_SETTINGS_ERROR = """Error: Can't find the file 'settings.py' in the directory containing {0}.
-It's common for the whole project, so you have to create it\n""".format(__file__)
+NO_OBJECT_COMMON_ERROR = "No '{0}' object found in {1}"
+
+NO_SETTINGS_ERROR = """Can't find the file 'settings.py' in the directory containing {0}.
+It's common for the whole project, so you have to create it""".format(__file__)
+
+NO_MAIN_APP_INSTANCE_ERROR = "Can't find or can't import the main 'app' instance in '{0}'"
+
+NO_APP_PACKAGE_ATTRIBUTE_ERROR = "Define the APP_PACKAGE settings attribute, please"
+
+NO_REGISTERED_MODULE_ERROR = "'{0}' module registered in settings.py but not found"
 
 
 def is_module_exist(module_name):
@@ -52,17 +63,27 @@ def get_module(module_name):
 
 
 def get_main_app():
-    """Special version of the `get_module` helper function.
-    Returns the `app` instance from the app `views` module.
-    Raises exception if no app instance found.
+    """Returns the `app` instance from the module specified in the APP_PACKAGE
+    attribute in your settings.py. Raises exception if no app instance found.
     """
-    app_module_name = getattr(settings, 'APP_MODULE', 'app')
-    app_module = get_module('{0}.views'.format(app_module_name))
-    app_obj = getattr(app_module, 'app', False)
-    if app_obj:
-        return app_obj
+    app_module_name = get_main_app_module_name()
+    app_module = get_module(app_module_name)
+
+    if hasattr(app_module, 'app'):
+        return getattr(app_module, 'app', False)
     else:
-        raise Exception("Can't find or can't import the main 'app' instance".format(app_module_name))
+        raise ImportError(NO_MAIN_APP_INSTANCE_ERROR.format(app_module_name))
+
+
+def get_main_app_module_name():
+    """Returns the main `app` module name `package_name.views`, where
+    package_name is APP_PACKAGE attribute from your settings.py
+    """
+    app_package_name = getattr(settings, 'APP_PACKAGE', False)
+    if app_package_name:
+        return '{package}.views'.format(package=app_package_name)
+    else:
+        raise AttributeError(NO_APP_PACKAGE_ATTRIBUTE_ERROR.format(app_package_name))
 
 
 class AppFactory(object):
@@ -85,42 +106,32 @@ class AppFactory(object):
         self.app_config = config
         self.app_envvar = envvar
 
-    def get_app_import_name(self):
-        app_import_name = getattr(settings, 'APP_MODULE', 'app')
-        app_module = get_module('{0}.views'.format(app_import_name))
-        if app_module:
-            return app_module.__name__
-        else:
-            raise Exception("Main app module '{0}.views' not found".format(app_module))
+    def get_blank_app(self, import_name=None, **kwargs):
+        return self._get_new_app_instance(import_name, **kwargs)
 
-    def get_blank_app(self, *args, **kwargs):
-        return self._get_new_app_instance(*args, **kwargs)
-
-    def get_app(self, *args, **kwargs):
-        app = self._get_new_app_instance(*args, **kwargs)
+    def get_app(self, import_name=None, **kwargs):
+        app = self._get_new_app_instance(import_name, **kwargs)
         self._register_blueprints(app)
 
         return app
 
-    def _get_new_app_instance(self, *args, **kwargs):
-        new_app = Flask(self.get_app_import_name(), *args, **kwargs)
+    def _get_new_app_instance(self, import_name, **kwargs):
+        if not import_name:
+            import_name = get_main_app_module_name()
+        new_app = Flask(import_name, **kwargs)
         new_app.config.from_object(self.app_config)
         new_app.config.from_envvar(self.app_envvar, silent=True)
 
         return new_app
 
     def _register_blueprints(self, app):
-        blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS', False)
-        if blueprints:
-            self._bind_blueprints_to_app(blueprints, app)
-
-    def _bind_blueprints_to_app(self, blueprints, app):
-        for bp_module_name in blueprints:
-            bp_module = get_module('{0}.views'.format(bp_module_name))
-            if not bp_module:
-                raise Exception("'{0}' module registered in settings.py but not found".format(bp_module_name))
-            bp_obj = getattr(bp_module, bp_module_name, False)
-            if bp_obj:
-                app.register_blueprint(bp_obj)
-            else:
-                raise Exception("No '{0}' object found in {1}".format(bp_module_name, bp_module.__name__))
+        if hasattr(settings, 'INSTALLED_BLUEPRINTS'):
+            blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS')
+            for bp_name in blueprints:
+                bp_module = get_module('{0}.views'.format(bp_name))
+                if not bp_module:
+                    raise ImportError(NO_REGISTERED_MODULE_ERROR.format(bp_name))
+                if hasattr(bp_module, bp_name):
+                    app.register_blueprint(getattr(bp_module, bp_name))
+                else:
+                    raise AttributeError(NO_OBJECT_COMMON_ERROR.format(bp_name, bp_module.__name__))

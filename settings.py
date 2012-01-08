@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-    Global settings for whole project.
+    settings
+    ~~~~~~~~
+
+    Global settings for your project.
 
     :copyright: (c) 2012 by Roman Semirook.
     :license: BSD, see LICENSE for more details.
@@ -21,17 +24,18 @@ class DevelopmentConfig(BaseConfig):
     TESTING = True
 
 
-# You may decide to rename your main application module (app -> common, for example).
-# Set it's name here ('app' is default)
+# The name of the package which contains your main application instance.
+# Flask Kit helpers will look for app object in `application.views` module
+# if the package name is `application`.
 
-APP_MODULE = 'app'
+APP_PACKAGE = 'application'
 
 
-# If you will use some blueprints in your project (and you have to),
-# register them in INSTALLED_BLUEPRINTS list.
-# For example, if you have blueprint object like
-# simple_page = Blueprint('simple_page', __name__)
-# in the simple_page blueprint module, put it's name, not the imported object itself,
-# in INSTALLED_BLUEPRINTS list -> INSTALLED_BLUEPRINTS = ['simple_page']
+# If you will use some blueprints in your project (and you have to), register
+# them in INSTALLED_BLUEPRINTS list. For example, if you have blueprint object
+# like `simple_page = Blueprint('simple_page', __name__)` in the simple_page
+# blueprint module, add it's name to the list (not the blueprint object itself),
+# INSTALLED_BLUEPRINTS = ['simple_page'].
+# Blueprint object and blueprint module names must match.
 
 INSTALLED_BLUEPRINTS = ['blueprint']
