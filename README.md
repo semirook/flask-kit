@@ -22,11 +22,8 @@ for my new Flask-based projects is:
         /models.py
         /static
             /css
-                /...
             /img
-                /...
             /js
-                /...
         /templates
             index.html
             ...
@@ -46,11 +43,8 @@ So, with a set of blueprints, the project file structure will be mostly like thi
         /models.py
         /static
             /css
-                /...
             /img
-                /...
             /js
-                /...
         /templates
             index.html
             ...
@@ -60,11 +54,8 @@ So, with a set of blueprints, the project file structure will be mostly like thi
         /models.py
         /static
             /css
-                /...
             /img
-                /...
             /js
-                /...
         /templates
             some_template.html
             ...
@@ -118,7 +109,6 @@ root of the folder. The basic file structure is:
         /models.py
         /static
             /css
-                /...
             /img
             /js
         /templates
