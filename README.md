@@ -176,9 +176,7 @@ grow. By now, there are:
 ----------------------|--------------------------------------------------------|
 runserver             | Runs the Flask development server i.e. app.run()       |
 shell                 | Runs interactive shell, ipython if installed           |
-createblueprint       | Creates new blueprint package with the specified name
-                        and blueprint instance of the same name in
-                        blueprint_name.views module
+createblueprint       | Creates new blueprint package with the specified name  |
 
 Run `./manage.py -h` for help and actual list of all available commands.
 
