@@ -176,8 +176,8 @@ Another useful stuff from Django world. Their number will constantly grow.
 runserver             | Runs the Flask development server i.e. app.run()       |
 shell                 | Runs interactive shell, ipython if installed           |
 createblueprint       | Creates new blueprint package with the specified name  |
-                        and blueprint instance of the same name in
-                        blueprint_name.views module
+                        and blueprint instance of the same name in             |
+                        blueprint_name.views module                            |
 
 Run `./manage.py -h` for help and actual list of all available commands.
 Run `./manage.py command_name -h` for the list of command arguments.
