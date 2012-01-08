@@ -13,8 +13,12 @@
 import imp
 import importlib
 import sys
-from flask import Flask
 import settings
+import os
+from flask import Flask
+from .templates.blueprint import (BLUEPRINT_VIEWS_TEMPLATE,
+                                  BLUEPRINT_INIT_TEMPLATE,
+                                  BLUEPRINT_MODELS_TEMPLATE)
 
 
 NO_MODULE_COMMON_ERROR = "Can't find module {0}"
@@ -135,3 +139,39 @@ class AppFactory(object):
                     app.register_blueprint(getattr(bp_module, bp_name))
                 else:
                     raise AttributeError(NO_OBJECT_COMMON_ERROR.format(bp_name, bp_module.__name__))
+
+
+class BlueprintPackageFactory(object):
+    def __init__(self, blueprint_name):
+        self.base_dir = os.path.abspath(os.path.dirname(settings.__file__))
+        self.blueprint_name = blueprint_name
+        self.blueprint_dir = os.path.join(self.base_dir, self.blueprint_name)
+        self.blueprint_structure = {'__init__.py': BLUEPRINT_INIT_TEMPLATE,
+                                    'models.py': BLUEPRINT_MODELS_TEMPLATE,
+                                    'views.py': BLUEPRINT_VIEWS_TEMPLATE,
+                                    '/templates': None,
+                                    '/static': None,
+                                    }
+
+    def make_file(self, template, path):
+        new_file = template.render(**self.__dict__)
+        with open(path, "w") as file_obj:
+            file_obj.write(new_file)
+
+    def make_dir(self, *args):
+        if not args:
+            if os.path.exists(self.blueprint_dir):
+                raise RuntimeError("You already have a package with this name")
+            else:
+                os.makedirs(self.blueprint_dir)
+        elif args:
+            full_path = os.path.join(self.blueprint_dir, *args)
+            os.makedirs(full_path)
+
+    def build(self):
+        self.make_dir()
+        for file_or_folder, template_or_type in self.blueprint_structure.items():
+            if not template_or_type and file_or_folder.startswith('/'):
+                self.make_dir(file_or_folder.strip('/'))
+            else:
+                self.make_file(template_or_type, os.path.join(self.blueprint_dir, file_or_folder))

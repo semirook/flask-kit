@@ -1,7 +1,18 @@
 #!/usr/bin/env python
-from flaskext.script import Manager, Shell
-from kit.helpers import get_main_app
+
+"""
+    manage
+    ~~~~~~
+
+    Set of useful management commands
+
+    :copyright: (c) 2012 by Roman Semirook.
+    :license: BSD, see LICENSE for more details.
+"""
+
 import code
+from flaskext.script import Manager, Shell, Command, Option
+from kit.helpers import get_main_app, BlueprintPackageFactory
 
 
 app = get_main_app()
@@ -24,7 +35,18 @@ class iShell(Shell):
         code.interact(self.banner, local=context)
 
 
+class Blueprint(Command):
+    """Creates new blueprint package with the specified name"""
+
+    def get_options(self):
+        return [Option('-n', '--name', dest='name', required=True)]
+
+    def run(self, name):
+        BlueprintPackageFactory(name).build()
+
+
 manager.add_command("shell", iShell())
+manager.add_command("createblueprint", Blueprint())
 
 
 if __name__ == "__main__":
