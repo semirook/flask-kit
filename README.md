@@ -17,9 +17,9 @@ for my new Flask-based projects is:
 ```
 /project
     /app
-        /__init__.py
-        /views.py
-        /models.py
+        __init__.py
+        views.py
+        models.py
         /static
             /css
             /img
@@ -38,9 +38,9 @@ So, with a set of blueprints, the project file structure will be mostly like thi
 ```
 /project
     /app
-        /__init__.py
-        /views.py
-        /models.py
+        __init__.py
+        views.py
+        models.py
         /static
             /css
             /img
@@ -49,9 +49,9 @@ So, with a set of blueprints, the project file structure will be mostly like thi
             index.html
             ...
     /some_blueprint
-        /__init__.py
-        /views.py
-        /models.py
+        __init__.py
+        views.py
+        models.py
         /static
             /css
             /img
@@ -104,9 +104,9 @@ root of the folder. The basic file structure is:
 ```
 /flask-kit
     /application
-        /__init__.py
-        /views.py
-        /models.py
+        __init__.py
+        views.py
+        models.py
         /static
             /css
             /img
@@ -115,15 +115,17 @@ root of the folder. The basic file structure is:
             main.html
 
     /blueprint
-        /__init__.py
-        /views.py
-        /models.py
+        __init__.py
+        views.py
+        models.py
         /templates
             welcome_page.html
 
     /kit
-        /__init__.py
-        /helpers.py
+        __init__.py
+        helpers.py
+        /templates
+            ...
 
     /settings.py
     /manage.py
