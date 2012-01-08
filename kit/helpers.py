@@ -128,7 +128,7 @@ class AppFactory(object):
         if hasattr(settings, 'INSTALLED_BLUEPRINTS'):
             blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS')
             for bp_name in blueprints:
-                bp_module = get_module('{0}.views'.format(bp_name))
+                bp_module = get_module('{package}.views'.format(package=bp_name))
                 if not bp_module:
                     raise ImportError(NO_REGISTERED_MODULE_ERROR.format(bp_name))
                 if hasattr(bp_module, bp_name):
