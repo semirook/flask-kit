@@ -1,5 +1,5 @@
 # Flask Kit
-Microkit for the Flask microframework
+Flexible microkit for Flask microframework
 
 
 ## What the Flask Kit is and what it is not
@@ -148,8 +148,8 @@ object, the concept of blueprints and some others. How can we work around it?
 ### settings.py
 Notice a couple of Flask-Kit specific attributes:
 
-:attr:`APP_PACKAGE` attribute defines the name of the package which contains
-your main application instance (and it's located in the application.views module,
+`APP_PACKAGE` attribute defines the name of the package which contains
+your main application instance (and it's located in the `application.views` module,
 by default). It's necessary attribute to run you project and to make some
 background tricks work. If you've decided to rename `application` module to
 `common` or something like that, you have to specify this name in the
@@ -158,7 +158,7 @@ APP_PACKAGE attribute.
 `APP_PACKAGE = 'application'` is default (example application package)
 
 
-:attr:`INSTALLED_BLUEPRINTS` attribute is something from Django world :)
+`INSTALLED_BLUEPRINTS` attribute is something from Django world :)
 In Django you can separate some logic to the set of applications and hook up them
 in INSTALLED_APPS list. In Flask, you have one main application and a set of
 blueprints for the same task. Specify the names of your blueprints here and Kit
