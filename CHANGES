@@ -1,0 +1,36 @@
+Flask-Kit Changelog
+===================
+
+Here you can see the Flask-Kit evolution.
+
+
+Version 0.2.2
+-------------
+- The `manage.py` implementation
+- Management command `shell`. The :class:`Shell` from the Flask-Script package
+  doesn't work with iPython >= 0.12, so there is custom class to work around that
+- Blueprint-by-Templates system implementation
+- New helper :class:`BlueprintPackageFactory`
+- Management command `createblueprint` to quickly build new blueprint packages
+
+
+Version 0.2.1
+-------------
+- The :attr:`APP_MODULE` in settings.py has been renamed to `APP_PACKAGE`
+- The :mod:`app` has been renamed to `application`
+- More clean `AppFactory` class
+
+
+Version 0.2
+-----------
+First big refactoring. Project structure has been frozen.
+
+
+Version 0.1.1
+-------------
+Kit core, project rearranging and some example files
+
+
+Version 0.1
+-----------
+First release, first commit, rather vague project structure
