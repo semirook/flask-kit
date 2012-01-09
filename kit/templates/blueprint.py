@@ -9,7 +9,7 @@ from flask.templating import render_template
 from flask.views import View
 
 
-{{ blueprint_name }} = Blueprint('{{ blueprint_name }}', __name__)
+{{ blueprint_name }} = Blueprint('{{ blueprint_name }}', __name__, template_folder='templates', static_folder='static')
 
 ''')
 

@@ -34,8 +34,7 @@ APP_PACKAGE = 'application'
 # If you will use some blueprints in your project (and you have to), register
 # them in INSTALLED_BLUEPRINTS list. For example, if you have blueprint object
 # like `simple_page = Blueprint('simple_page', __name__)` in the simple_page
-# blueprint module, add it's name to the list (not the blueprint object itself),
-# INSTALLED_BLUEPRINTS = ['simple_page'].
+# blueprint module, add it's name to the list (not the blueprint object itself).
 # Blueprint object and blueprint module names must match.
 
 INSTALLED_BLUEPRINTS = ['blueprint']
