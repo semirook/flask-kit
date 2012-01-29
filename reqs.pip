@@ -1,11 +1,11 @@
 Flask==0.8
 
-
 # Some useful extensions from official Flask extensions registry
 # http://flask.pocoo.org/extensions/
 
 Flask-Gravatar==0.2.3
 Flask-Script==0.3.1
+Flask-WTF==0.5.2
 
 
 # Recommended Python modules and applications

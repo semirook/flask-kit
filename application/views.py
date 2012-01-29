@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask.templating import render_template
 from flask.views import View
-from kit.helpers import AppFactory
-from settings import DevelopmentConfig
-
-
-# It's your main flask app.
-# You may define your own config class for it in settings.py
-app = AppFactory(DevelopmentConfig).get_app()
+from application import app
 
 
 # Your main views may be here. In fact, all of your views may be here

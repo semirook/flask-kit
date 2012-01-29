@@ -38,3 +38,7 @@ APP_PACKAGE = 'application'
 # Blueprint object and blueprint module names must match.
 
 INSTALLED_BLUEPRINTS = ['blueprint']
+
+
+# Django-style for registering context processors.
+CONTEXT_PROCESSORS = ['application.context_processors.my_email']

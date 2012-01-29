@@ -105,6 +105,7 @@ root of the folder. The basic file structure is:
 /flask-kit
     /application
         __init__.py
+        database.py
         views.py
         models.py
         /static

@@ -34,6 +34,8 @@ NO_APP_PACKAGE_ATTRIBUTE_ERROR = "Define the APP_PACKAGE settings attribute, ple
 
 NO_REGISTERED_MODULE_ERROR = "'{0}' module registered in settings.py but not found"
 
+NO_REGISTERED_CONTEXT_PROCESSOR_ERROR = "'{0}' context processor registered in settings.py but not found"
+
 
 def is_module_exist(module_name):
     """Checks if module exists by the module name as the parameter:
@@ -85,7 +87,7 @@ def get_main_app_module_name():
     """
     app_package_name = getattr(settings, 'APP_PACKAGE', False)
     if app_package_name:
-        return '{package}.views'.format(package=app_package_name)
+        return app_package_name
     else:
         raise AttributeError(NO_APP_PACKAGE_ATTRIBUTE_ERROR.format(app_package_name))
 
@@ -100,24 +102,17 @@ class AppFactory(object):
     :meth:`get_app` is the basic method to receive new app instance
     with automatically registered blueprints from the INSTALLED_BLUEPRINTS list (from your settings.py)
 
-    If you don't want to register any blueprints and want to get simple basic app,
-    there is :meth:`get_blank_app` for you:
-
-           app = AppFactory(DevelopmentConfig).get_blank_app()
-
     """
     def __init__(self, config, envvar='PROJECT_SETTINGS'):
         self.app_config = config
         self.app_envvar = envvar
 
-    def get_blank_app(self, import_name=None, **kwargs):
-        return self._get_new_app_instance(import_name, **kwargs)
-
     def get_app(self, import_name=None, **kwargs):
-        app = self._get_new_app_instance(import_name, **kwargs)
-        self._register_blueprints(app)
+        self.app = self._get_new_app_instance(import_name, **kwargs)
+        self.app.register_all_blueprints = self._register_blueprints
+        self.app.register_all_context_processors = self._register_context_processors
 
-        return app
+        return self.app
 
     def _get_new_app_instance(self, import_name, **kwargs):
         if not import_name:
@@ -128,15 +123,27 @@ class AppFactory(object):
 
         return new_app
 
-    def _register_blueprints(self, app):
+    def _register_context_processors(self):
+        if hasattr(settings, 'CONTEXT_PROCESSORS'):
+            processors = getattr(settings, 'CONTEXT_PROCESSORS')
+            for processor in processors:
+                processor_module_name = '.'.join(processor.split('.')[:-1])
+                processor_itself_name = processor.split('.')[-1]
+                module = get_module(processor_module_name)
+                if module and hasattr(module, processor_itself_name):
+                    self.app.context_processor(getattr(module, processor_itself_name))
+                else:
+                    raise ImportError(NO_REGISTERED_CONTEXT_PROCESSOR_ERROR.format(processor))
+
+    def _register_blueprints(self):
         if hasattr(settings, 'INSTALLED_BLUEPRINTS'):
             blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS')
             for bp_name in blueprints:
-                bp_module = get_module('{package}.views'.format(package=bp_name))
+                bp_module = get_module('{package}'.format(package=bp_name))
                 if not bp_module:
                     raise ImportError(NO_REGISTERED_MODULE_ERROR.format(bp_name))
                 if hasattr(bp_module, bp_name):
-                    app.register_blueprint(getattr(bp_module, bp_name))
+                    self.app.register_blueprint(getattr(bp_module, bp_name))
                 else:
                     raise AttributeError(NO_OBJECT_COMMON_ERROR.format(bp_name, bp_module.__name__))
 
