@@ -4,6 +4,17 @@ Flask-Kit Changelog
 Here you can see the Flask-Kit evolution.
 
 
+Version 0.3
+-----------
+- Huge architectural problem that gave rise to circular imports was fixed.
+  By now you can import and use original app instance everywhere
+- Finally, you can define database object once in the `database` module,
+  import and use it everywhere like the `app` instance
+- Cleaned-up, refactored helpers. By now we have `AppFactory`, `ModulesHelper`
+  and `MainAppHelper` classes that encapsulate useful set of helper methods
+- Django-style context processors registration system
+
+
 Version 0.2.2
 -------------
 - The `manage.py` implementation
