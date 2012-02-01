@@ -12,10 +12,10 @@
 
 import code
 from flaskext.script import Manager, Shell, Command, Option
-from kit.helpers import get_main_app, BlueprintPackageFactory
+from kit.helpers import MainAppHelper, BlueprintPackageFactory
 
 
-app = get_main_app()
+app = MainAppHelper.get_instance()
 manager = Manager(app)
 
 

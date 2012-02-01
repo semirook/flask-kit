@@ -37,59 +37,66 @@ NO_REGISTERED_MODULE_ERROR = "'{0}' module registered in settings.py but not fou
 NO_REGISTERED_CONTEXT_PROCESSOR_ERROR = "'{0}' context processor registered in settings.py but not found"
 
 
-def is_module_exist(module_name):
-    """Checks if module exists by the module name as the parameter:
+class ModulesHelper(object):
+    def __init__(self, module_name):
+        self.module_name = module_name
 
-           is_module_exist('app.views')
+    def is_module_exist(self):
+        """Checks if module exists by the module name as the parameter:
 
-    Throws the error string to the console output if no module found
-    but doesn't raise any exception. Returns bool value.
-    """
-    error_map = {'settings': NO_SETTINGS_ERROR}
-    try:
-        imp.find_module(module_name.replace('.', '/'))
-        return True
-    except ImportError:
-        if module_name in error_map.keys():
-            sys.stderr.write(error_map[module_name])
+               is_module_exist('app.views')
+
+        Throws the error string to the console output if no module found
+        but doesn't raise any exception. Returns bool value.
+        """
+        error_map = {'settings': NO_SETTINGS_ERROR}
+        try:
+            imp.find_module(self.module_name.replace('.', '/'))
+            return True
+        except ImportError:
+            if self.module_name in error_map.keys():
+                sys.stderr.write(error_map[self.module_name])
+            else:
+                sys.stderr.write(NO_MODULE_COMMON_ERROR.format(self.module_name))
+            return False
+
+    def get_module(self):
+        """Returns the imported module object by the module name as the parameter:
+
+               get_module('app.views')
+
+        Doesn't raise any exception if no module found (will return `False` in such case).
+        """
+        if self.is_module_exist():
+            return importlib.import_module(self.module_name)
+
+
+class MainAppHelper(object):
+
+    @classmethod
+    def get_instance(cls):
+        """Returns the `app` instance from the module specified in the APP_PACKAGE
+        attribute in your settings.py. Raises ImportError if no app instance found.
+        """
+        app_module_name = cls.get_module_name()
+        app_module = ModulesHelper(app_module_name).get_module()
+
+        if hasattr(app_module, 'app'):
+            return getattr(app_module, 'app', False)
         else:
-            sys.stderr.write(NO_MODULE_COMMON_ERROR.format(module_name))
-        return False
+            raise ImportError(NO_MAIN_APP_INSTANCE_ERROR.format(app_module_name))
 
-
-def get_module(module_name):
-    """Returns the imported module object by the module name as the parameter:
-
-           get_module('app.views')
-
-    Doesn't raise any exception if no module found (will return `False` in such case).
-    """
-    if is_module_exist(module_name):
-        return importlib.import_module(module_name)
-
-
-def get_main_app():
-    """Returns the `app` instance from the module specified in the APP_PACKAGE
-    attribute in your settings.py. Raises exception if no app instance found.
-    """
-    app_module_name = get_main_app_module_name()
-    app_module = get_module(app_module_name)
-
-    if hasattr(app_module, 'app'):
-        return getattr(app_module, 'app', False)
-    else:
-        raise ImportError(NO_MAIN_APP_INSTANCE_ERROR.format(app_module_name))
-
-
-def get_main_app_module_name():
-    """Returns the main `app` module name `package_name.views`, where
-    package_name is APP_PACKAGE attribute from your settings.py
-    """
-    app_package_name = getattr(settings, 'APP_PACKAGE', False)
-    if app_package_name:
-        return app_package_name
-    else:
-        raise AttributeError(NO_APP_PACKAGE_ATTRIBUTE_ERROR.format(app_package_name))
+    @classmethod
+    def get_module_name(cls):
+        """Returns the main `app` module name `package_name`, where
+        package_name is APP_PACKAGE attribute from your settings.py.
+        Raises AttributeError if no APP_PACKAGE attribute found.
+        """
+        app_package_name = getattr(settings, 'APP_PACKAGE', False)
+        if app_package_name:
+            return app_package_name
+        else:
+            raise AttributeError(NO_APP_PACKAGE_ATTRIBUTE_ERROR.format(app_package_name))
 
 
 class AppFactory(object):
@@ -100,8 +107,9 @@ class AppFactory(object):
     :param DevelopmentConfig: your config class for this app instance from settings.py
 
     :meth:`get_app` is the basic method to receive new app instance
-    with automatically registered blueprints from the INSTALLED_BLUEPRINTS list (from your settings.py)
-
+    with registered blueprints from the INSTALLED_BLUEPRINTS list
+    and registered context processors from the CONTEXT_PROCESSORS list
+    (from your settings.py)
     """
     def __init__(self, config, envvar='PROJECT_SETTINGS'):
         self.app_config = config
@@ -116,7 +124,7 @@ class AppFactory(object):
 
     def _get_new_app_instance(self, import_name, **kwargs):
         if not import_name:
-            import_name = get_main_app_module_name()
+            import_name = MainAppHelper.get_module_name()
         new_app = Flask(import_name, **kwargs)
         new_app.config.from_object(self.app_config)
         new_app.config.from_envvar(self.app_envvar, silent=True)
@@ -129,7 +137,7 @@ class AppFactory(object):
             for processor in processors:
                 processor_module_name = '.'.join(processor.split('.')[:-1])
                 processor_itself_name = processor.split('.')[-1]
-                module = get_module(processor_module_name)
+                module = ModulesHelper(processor_module_name).get_module()
                 if module and hasattr(module, processor_itself_name):
                     self.app.context_processor(getattr(module, processor_itself_name))
                 else:
@@ -139,7 +147,7 @@ class AppFactory(object):
         if hasattr(settings, 'INSTALLED_BLUEPRINTS'):
             blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS')
             for bp_name in blueprints:
-                bp_module = get_module('{package}'.format(package=bp_name))
+                bp_module = ModulesHelper(bp_name).get_module()
                 if not bp_module:
                     raise ImportError(NO_REGISTERED_MODULE_ERROR.format(bp_name))
                 if hasattr(bp_module, bp_name):
@@ -149,6 +157,9 @@ class AppFactory(object):
 
 
 class BlueprintPackageFactory(object):
+    """Creates new blueprint package by the set of templates.
+    Used by management-command `createblueprint`"""
+
     def __init__(self, blueprint_name):
         self.base_dir = os.path.abspath(os.path.dirname(settings.__file__))
         self.blueprint_name = blueprint_name
