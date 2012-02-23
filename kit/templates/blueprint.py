@@ -16,7 +16,10 @@ BLUEPRINT_INIT_TEMPLATE = Template(u'''\
 from flask.blueprints import Blueprint
 
 
-{{ blueprint_name }} = Blueprint('{{ blueprint_name }}', __name__, template_folder='templates', static_folder='static')
+{{ blueprint_name }} = Blueprint('{{ blueprint_name }}', __name__,
+                                 template_folder='templates',
+                                 static_folder='static',
+                                 url_prefix='/{{ blueprint_name }}')
 
 
 # All of yours blueprint logic
