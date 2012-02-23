@@ -10,12 +10,12 @@
     :license: BSD, see LICENSE for more details.
 """
 
-import imp
 import importlib
 import sys
 import settings
 import os
 from flask import Flask
+from werkzeug.utils import find_modules
 from .templates.blueprint import (BLUEPRINT_VIEWS_TEMPLATE,
                                   BLUEPRINT_INIT_TEMPLATE,
                                   BLUEPRINT_MODELS_TEMPLATE)
@@ -51,7 +51,7 @@ class ModulesHelper(object):
         """
         error_map = {'settings': NO_SETTINGS_ERROR}
         try:
-            imp.find_module(self.module_name.replace('.', '/'))
+            find_modules(self.module_name)
             return True
         except ImportError:
             if self.module_name in error_map.keys():
