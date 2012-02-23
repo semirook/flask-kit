@@ -8,7 +8,7 @@ from application import app
 # if you don't use blueprints and your site is really micro.
 
 # In this example we use so called `Pluggable Views` or `Class Based Views`.
-# You should be familiar with them if you have some experience with Django.
+# You should be familiar with them if you already had some experience with Django.
 # If not - please, visit http://flask.pocoo.org/docs/views/
 class MainPageView(View):
     def dispatch_request(self):

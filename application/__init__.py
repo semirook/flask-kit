@@ -13,17 +13,15 @@
 from kit.helpers import AppFactory
 from settings import DevelopmentConfig
 
-# It's your main flask app.
-# You may define your own config class for it in settings.py
+# It's your main flask app. Define your own config class in settings.py
 app = AppFactory(DevelopmentConfig).get_app()
 
-# Register you database object or additional Flask plugins that require
-# original app object here to avoid some problems with circular imports
+# Leave these imports here to avoid some problems with circular imports
 from database import *
 
 # Leave these methods here to avoid some problems with circular imports
 app.register_all_blueprints()
 app.register_all_context_processors()
 
-# All of yours application logic
+# Application's views
 from views import *

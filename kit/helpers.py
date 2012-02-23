@@ -109,7 +109,7 @@ class AppFactory(object):
     :meth:`get_app` is the basic method to receive new app instance
     with registered blueprints from the INSTALLED_BLUEPRINTS list
     and registered context processors from the CONTEXT_PROCESSORS list
-    (from your settings.py)
+    from settings.py
     """
     def __init__(self, config, envvar='PROJECT_SETTINGS'):
         self.app_config = config
