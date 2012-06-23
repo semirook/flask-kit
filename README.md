@@ -1,7 +1,3 @@
-# Flaskit
-Flexible microkit for Flask microframework
-
-
 ## What the Flaskit is and what it is not
 
 **Flaskit** is about [Flask](http://flask.pocoo.org/) project organization.
