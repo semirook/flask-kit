@@ -10,7 +10,9 @@
     :license: BSD, see LICENSE for more details.
 """
 
-# Very simple example of context processor.
-# You can use `my_email` variable in your templates
-def my_email():
-    return {'my_email': 'semirook@ya.ru'}
+
+def my_contacts():
+    """Very simple example of context processor"""
+    return {'my_email': 'semirook@gmail.com',
+            'my_github': 'https://github.com/semirook',
+            }

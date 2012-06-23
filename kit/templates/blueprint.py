@@ -6,7 +6,7 @@ BLUEPRINT_VIEWS_TEMPLATE = Template(u'''\
 # -*- coding: utf-8 -*-
 from {{ blueprint_name }} import {{ blueprint_name }}
 
-# Put your {{ blueprint_name }} blueprint views here
+# Your {{ blueprint_name }} views might be here
 
 ''')
 
@@ -22,7 +22,7 @@ from flask.blueprints import Blueprint
                                  url_prefix='/{{ blueprint_name }}')
 
 
-# All of yours blueprint logic
+# Blueprint's views
 from views import *
 
 ''')

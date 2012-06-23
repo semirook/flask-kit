@@ -4,6 +4,7 @@ from flask.blueprints import Blueprint
 
 # Blueprint encapsulates some logic, models, urls, templates etc. to keep
 # your main app clean and simple to maintain.
+
 # If you are not familiar with the concept of blueprints - please, visit
 # http://flask.pocoo.org/docs/blueprints/
 blueprint = Blueprint('blueprint', __name__,
@@ -12,5 +13,5 @@ blueprint = Blueprint('blueprint', __name__,
                       url_prefix='/blueprint')
 
 
-# All of yours blueprint logic
+# Blueprint's views
 from views import *

@@ -10,6 +10,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
+
 class BaseConfig(object):
     """Base config class"""
     DEBUG = False
@@ -17,15 +18,23 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
-    """Optional config for development needs.
+    """
+    Optional config for development needs.
     Make your own like this, inherit from BaseConfig class.
     """
     DEBUG = True
     TESTING = True
 
 
+class TestingConfig(DevelopmentConfig):
+    """
+    Optional config for testing purposes.
+    """
+    pass
+
+
 # The name of the package which contains your main application instance.
-# Flask Kit helpers will look for app object in it.
+# Flaskit helpers will look for app object in it.
 APP_PACKAGE = 'application'
 
 
@@ -37,4 +46,4 @@ INSTALLED_BLUEPRINTS = ['blueprint']
 
 
 # Django-style for registering context processors.
-CONTEXT_PROCESSORS = ['application.context_processors.my_email']
+CONTEXT_PROCESSORS = ['application.context_processors.my_contacts']

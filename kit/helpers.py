@@ -4,167 +4,146 @@
     kit.helpers
     ~~~~~~~~~~~
 
-    Implements some basic kit helpers.
+    Implements Flaskit helpers.
 
     :copyright: (c) 2012 by Roman Semirook.
     :license: BSD, see LICENSE for more details.
 """
 
 import importlib
-import sys
 import settings
 import os
+
 from flask import Flask
 from werkzeug.utils import find_modules
+
+from .exceptions import NoAppException, NoBlueprintException, NoContextProcessorException
 from .templates.blueprint import (BLUEPRINT_VIEWS_TEMPLATE,
                                   BLUEPRINT_INIT_TEMPLATE,
                                   BLUEPRINT_MODELS_TEMPLATE)
 
 
-NO_MODULE_COMMON_ERROR = "Can't find module {0}"
-
-NO_OBJECT_COMMON_ERROR = "No '{0}' object found in {1}"
-
-NO_SETTINGS_ERROR = """Can't find the file 'settings.py' in the directory containing {0}.
-It's common for the whole project, so you have to create it""".format(__file__)
-
-NO_MAIN_APP_INSTANCE_ERROR = "Can't find or can't import the main 'app' instance in '{0}'"
-
-NO_APP_PACKAGE_ATTRIBUTE_ERROR = "Define the APP_PACKAGE settings attribute, please"
-
-NO_REGISTERED_MODULE_ERROR = "'{0}' module registered in settings.py but not found"
-
-NO_REGISTERED_CONTEXT_PROCESSOR_ERROR = "'{0}' context processor registered in settings.py but not found"
-
-
 class ModulesHelper(object):
+    """
+    The set of methods that used by another helpers and can be used
+    by yourself for some operations with modules import and existence check
+    """
+
     def __init__(self, module_name):
         self.module_name = module_name
 
-    def is_module_exist(self):
-        """Checks if module exists by the module name as the parameter:
+    def is_module_exists(self):
+        """
+        Checks if module exists by the module name as the parameter:
 
                is_module_exist('app.views')
 
         Throws the error string to the console output if no module found
         but doesn't raise any exception. Returns bool value.
         """
-        error_map = {'settings': NO_SETTINGS_ERROR}
         try:
             find_modules(self.module_name)
             return True
         except ImportError:
-            if self.module_name in error_map.keys():
-                sys.stderr.write(error_map[self.module_name])
-            else:
-                sys.stderr.write(NO_MODULE_COMMON_ERROR.format(self.module_name))
             return False
 
     def get_module(self):
-        """Returns the imported module object by the module name as the parameter:
+        """
+        Returns the imported module object by the module name as the parameter:
 
                get_module('app.views')
 
         Doesn't raise any exception if no module found (will return `False` in such case).
         """
-        if self.is_module_exist():
+        if self.is_module_exists():
             return importlib.import_module(self.module_name)
 
 
 class MainAppHelper(object):
 
     @classmethod
-    def get_instance(cls):
-        """Returns the `app` instance from the module specified in the APP_PACKAGE
-        attribute in your settings.py. Raises ImportError if no app instance found.
+    def get_app(cls):
         """
-        app_module_name = cls.get_module_name()
+        Returns the `app` instance from the module specified in the APP_PACKAGE
+        attribute in your settings.py.
+        """
+        app_module_name = getattr(settings, 'APP_PACKAGE', False)
+        if not app_module_name:
+            raise NoAppException('Define APP_PACKAGE in settings.py')
+
         app_module = ModulesHelper(app_module_name).get_module()
+        app_instance = getattr(app_module, 'app', False)
+        if not app_instance:
+            raise NoAppException('No app instance found in "{mod}" module'.format(mod=app_module.__name__))
 
-        if hasattr(app_module, 'app'):
-            return getattr(app_module, 'app', False)
-        else:
-            raise ImportError(NO_MAIN_APP_INSTANCE_ERROR.format(app_module_name))
-
-    @classmethod
-    def get_module_name(cls):
-        """Returns the main `app` module name `package_name`, where
-        package_name is APP_PACKAGE attribute from your settings.py.
-        Raises AttributeError if no APP_PACKAGE attribute found.
-        """
-        app_package_name = getattr(settings, 'APP_PACKAGE', False)
-        if app_package_name:
-            return app_package_name
-        else:
-            raise AttributeError(NO_APP_PACKAGE_ATTRIBUTE_ERROR.format(app_package_name))
+        return app_instance
 
 
 class AppFactory(object):
-    """Flask application factory. It's really simple to use:
+    """
+    Flaskit application factory. It's really simple to use:
 
            app = AppFactory(DevelopmentConfig).get_app()
 
     :param DevelopmentConfig: your config class for this app instance from settings.py
 
-    :meth:`get_app` is the basic method to receive new app instance
-    with registered blueprints from the INSTALLED_BLUEPRINTS list
-    and registered context processors from the CONTEXT_PROCESSORS list
-    from settings.py
+    :meth:`get_app` is the basic method to make new app instance with registered
+    blueprints and context processors.
     """
+
     def __init__(self, config, envvar='PROJECT_SETTINGS'):
         self.app_config = config
         self.app_envvar = envvar
 
-    def get_app(self, import_name=None, **kwargs):
-        self.app = self._get_new_app_instance(import_name, **kwargs)
-        self.app.register_all_blueprints = self._register_blueprints
-        self.app.register_all_context_processors = self._register_context_processors
+    def get_app(self, app_module_name=None, **kwargs):
+        app_module_name = app_module_name or getattr(settings, 'APP_PACKAGE', False)
+        self.app = self._get_new_app_instance(app_module_name, **kwargs)
+        self.app.register_blueprints = self._register_blueprints
+        self.app.register_context_processors = self._register_context_processors
 
         return self.app
 
-    def _get_new_app_instance(self, import_name, **kwargs):
-        if not import_name:
-            import_name = MainAppHelper.get_module_name()
-        new_app = Flask(import_name, **kwargs)
-        new_app.config.from_object(self.app_config)
+    def _get_new_app_instance(self, app_module_name, **kwargs):
+        new_app = Flask(app_module_name, **kwargs)
         new_app.config.from_envvar(self.app_envvar, silent=True)
+        new_app.config.from_object(self.app_config)
 
         return new_app
 
     def _register_context_processors(self):
-        if hasattr(settings, 'CONTEXT_PROCESSORS'):
-            processors = getattr(settings, 'CONTEXT_PROCESSORS')
-            for processor in processors:
-                processor_module_name = '.'.join(processor.split('.')[:-1])
-                processor_itself_name = processor.split('.')[-1]
-                module = ModulesHelper(processor_module_name).get_module()
-                if module and hasattr(module, processor_itself_name):
-                    self.app.context_processor(getattr(module, processor_itself_name))
-                else:
-                    raise ImportError(NO_REGISTERED_CONTEXT_PROCESSOR_ERROR.format(processor))
+        processors = getattr(settings, 'CONTEXT_PROCESSORS', [])
+        for processor in processors:
+            processor_module_name = '.'.join(processor.split('.')[:-1])
+            processor_itself_name = processor.split('.')[-1]
+            module = ModulesHelper(processor_module_name).get_module()
+            if module and hasattr(module, processor_itself_name):
+                self.app.context_processor(getattr(module, processor_itself_name))
+            else:
+                raise NoContextProcessorException()
 
     def _register_blueprints(self):
-        if hasattr(settings, 'INSTALLED_BLUEPRINTS'):
-            blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS')
-            for bp_name in blueprints:
-                bp_module = ModulesHelper(bp_name).get_module()
-                if not bp_module:
-                    raise ImportError(NO_REGISTERED_MODULE_ERROR.format(bp_name))
-                if hasattr(bp_module, bp_name):
-                    self.app.register_blueprint(getattr(bp_module, bp_name))
-                else:
-                    raise AttributeError(NO_OBJECT_COMMON_ERROR.format(bp_name, bp_module.__name__))
+        blueprints = getattr(settings, 'INSTALLED_BLUEPRINTS', [])
+        for bp_name in blueprints:
+            bp_package = ModulesHelper(bp_name).get_module()
+            if hasattr(bp_package, bp_name):
+                self.app.register_blueprint(getattr(bp_package, bp_name))
+
+            else:
+                raise NoBlueprintException()
 
 
-class BlueprintPackageFactory(object):
-    """Creates new blueprint package by the set of templates.
-    Used by management-command `createblueprint`"""
+class BlueprintsFactory(object):
+    """
+    Creates new blueprint package by the set of templates.
+    Used by management-command `createblueprint`
+    """
 
-    def __init__(self, blueprint_name):
+    def __init__(self, name, structure=None):
         self.base_dir = os.path.abspath(os.path.dirname(settings.__file__))
-        self.blueprint_name = blueprint_name
+        self.blueprint_name = name
         self.blueprint_dir = os.path.join(self.base_dir, self.blueprint_name)
-        self.blueprint_structure = {'__init__.py': BLUEPRINT_INIT_TEMPLATE,
+        self.blueprint_structure = structure or \
+                                   {'__init__.py': BLUEPRINT_INIT_TEMPLATE,
                                     'models.py': BLUEPRINT_MODELS_TEMPLATE,
                                     'views.py': BLUEPRINT_VIEWS_TEMPLATE,
                                     '/templates': None,
@@ -188,8 +167,8 @@ class BlueprintPackageFactory(object):
 
     def build(self):
         self.make_dir()
-        for file_or_folder, template_or_type in self.blueprint_structure.items():
-            if not template_or_type and file_or_folder.startswith('/'):
+        for file_or_folder, template in self.blueprint_structure.items():
+            if not template and file_or_folder.startswith('/'):
                 self.make_dir(file_or_folder.strip('/'))
             else:
-                self.make_file(template_or_type, os.path.join(self.blueprint_dir, file_or_folder))
+                self.make_file(template, os.path.join(self.blueprint_dir, file_or_folder))

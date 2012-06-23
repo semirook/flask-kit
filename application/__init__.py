@@ -13,15 +13,12 @@
 from kit.helpers import AppFactory
 from settings import DevelopmentConfig
 
-# It's your main flask app. Define your own config class in settings.py
+# It's your main flask app instance
 app = AppFactory(DevelopmentConfig).get_app()
 
-# Leave these imports here to avoid some problems with circular imports
+# Leave this stuff here to avoid some problems with circular imports
+app.register_blueprints()
+app.register_context_processors()
+
 from database import *
-
-# Leave these methods here to avoid some problems with circular imports
-app.register_all_blueprints()
-app.register_all_context_processors()
-
-# Application's views
 from views import *

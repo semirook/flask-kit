@@ -1,7 +1,18 @@
-Flask-Kit Changelog
+Flaskit Changelog
 ===================
 
-Here you can see the Flask-Kit evolution.
+Here you can see the Flaskit evolution.
+
+
+Version 0.3.1
+-------------
+- Demo views and templates have been removed. These examples will be in docs
+- Helpers are more clear and clean now
+- `Flask-Testing` extention is the part of Flaskit
+  You can find simple KitTestCase in the `kit.testing` module. Make love and tests
+- Nose runner is really good. Use it out of the box
+- Database object import in blueprints is fixed
+- `Flaskit` is more cool than `Flask-Kit`. Let it be.
 
 
 Version 0.3
