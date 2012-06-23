@@ -28,6 +28,7 @@ And it looks like this:
         __init__.py
         views.py
         models.py
+        context_processors.py
         /static
         /templates
         ...
@@ -77,7 +78,7 @@ That's all!
 
 ## Configuration
 
-Flask Kit consists of the core `application` module, `blueprint` example module, 
+Flaskit consists of the core `application` module, `blueprint` example module,
 core `kit` module with some important helpers, `manage.py` and `settings.py` files in the
 root of the folder.
 
@@ -109,7 +110,7 @@ list for you.
 `INSTALLED_BLUEPRINTS = ['blueprint']` is by default (example blueprint package).
 
 `CONTEXT_PROCESSORS` is a list of registered context processors. You have to set 
-full path to your processor module like 'application_or_blueprint.context_processors.processors'.
+full path to your processor module like 'application_or_blueprint.context_processors.processor'.
 Django-style thing.
 
 
@@ -122,9 +123,8 @@ grow. By now, there are:
 runserver             | Runs the Flask development server i.e. app.run()       |
 shell                 | Runs interactive shell, ipython if installed           |
 createblueprint       | Creates new blueprint package with the specified name  |
+test                  | Nose test runner (with some restrictions yet)          |
 
 Run `./manage.py -h` for the list of all available commands.
 
 Run `./manage.py command_name -h` for the list of command arguments.
-
-
