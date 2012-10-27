@@ -1,0 +1,85 @@
+/*
+Forms common
+*/
+
+.button {
+    position: relative;
+    display: inline-block;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-width: 0;
+    border-radius: 2px;
+    background: #2e3436;
+    color: #fff !important;
+    padding: 0.5em 1.5em;
+}
+.input {
+    padding: 0.5em;
+    vertical-align: middle;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+    border-width: 0;
+    border-top: 1px solid #A9A9A9;
+    color: #A9A9A9;
+}
+.form-errors {
+    margin-left: 20%;
+    padding: 0 0.5em;
+    width: 55%;
+}
+.form-errors li {
+    color: red;
+    padding: 0.8em 0;
+}
+.common-form__field-wrapper {
+    clear: both;
+    margin: 1em 0;
+}
+.common-form__field-wrapper_highlight {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #fafafa;
+    padding: 1.5em 0;
+}
+.common-form {
+    margin: 2em 0 1em;
+    font-size: 1.4em;
+    vertical-align: bottom;
+}
+.common-form__label {
+    display: inline-block;
+    width: 20%;
+    text-align: right;
+}
+.common-form__input {
+    padding: 0.5em;
+    vertical-align: middle;
+    color: #2e3436;
+    display: inline-block;
+    width: 55%;
+}
+.common-form__submit {
+    padding: 0.6em 2em;
+}
+
+
+/*
+Login form
+*/
+
+.login-form {
+    font-size: 1.4em;
+    vertical-align: bottom;
+}
+.login-form__submit {
+    background: #a8a8a8;
+}
+.login-form__field-wrapper {
+    display: inline-block;
+    margin-right: 1em;
+}

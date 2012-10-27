@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+
+{% block login_header %}{% endblock %}
+
+
+{% block content %}
+    <article class="page l-75-c">
+        <header class="page__header">
+            <h1 class="page__title">Example Auth</h1>
+        </header>
+        {% include 'blocks/login_form.html' %}
+    </article>
+{% endblock %}

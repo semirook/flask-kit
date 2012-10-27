@@ -1,0 +1,27 @@
+{% macro common_form_field(field) %}
+    <div class="common-form__field-wrapper">
+        {% if field.label.text %}
+            <label class="common-form__label" for="{{ field.id }}">
+                {{ field.label.text }}: {% if field.flags.required %} *{% endif %}
+            </label>
+        {% endif %}
+        {{ field(**kwargs) }}
+        {% if field.errors %}
+            <div class="form-errors">
+                <ul>
+                    {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro login_form_field(field) %}
+    <div class="login-form__field-wrapper">
+        {% if field.label.text %}
+            <label for="{{ field.id }}">{{ field.label.text }}:&nbsp;</label>
+        {% endif %}
+        {{ field(**kwargs) }}
+    </div>
+{% endmacro %}

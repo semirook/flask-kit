@@ -1,0 +1,147 @@
+/*
+Layout
+*/
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+.l-wrapper {
+    min-height: 100%;
+    min-width: 720px;
+    overflow: hidden;
+    position: relative;
+    background: url("../img/back.png");
+}
+.l-75-c {
+    width: 75%;
+    max-width: 780px;
+    margin: 0 auto;
+}
+.l-50-c {
+    width: 48%;
+    max-width: 780px;
+    margin: 0 auto;
+}
+.l-footer-crosspiece {
+    height: 12em;
+    clear: both;
+    position: relative;
+}
+
+
+/*
+Header blocks
+*/
+
+.header__logo-group {
+    clear: both;
+    text-align: center;
+    padding: 5em;
+}
+.header__logo {
+    font-family: 'Palatino', serif;
+    font-size: 6.8em;
+    font-weight: normal;
+    text-shadow: 0 2px 0 #FFF;
+    letter-spacing: -3px;
+    line-height: 1em;
+    clear: both;
+}
+.header__site-remark{
+    font-weight: normal;
+    font-size: 1.6em;
+    line-height: 1em;
+    clear: both;
+}
+.top-navigation {
+    margin: 0 auto;
+    line-height: 2em;
+    padding: 1em 0;
+    overflow: hidden;
+}
+.top-navigation__list {
+    position: relative;
+    display: inline-block;
+}
+.top-navigation__item {
+    font-size: 1.8em;
+    display: inline;
+    padding-right: 1em;
+    vertical-align: top;
+}
+.top-navigation__item-link {
+    text-decoration: none;
+}
+.top-navigation__item-link-text {
+    border-bottom: 1px solid #204a87;
+}
+.top-navigation__item_active .top-navigation__item-link-text {
+    border-bottom: none;
+}
+.top-navigation__item-counter {
+    font-size: 60%;
+}
+.flash-messages {
+    position: relative;
+    padding: 1em;
+    overflow: hidden;
+    clear: both;
+    border-left: 3px red solid;
+    font-size: 1.2em;
+    margin-top: 1em;
+}
+
+
+/*
+Login header
+*/
+
+.login-header {
+    position: relative;
+    background: #2e3436;
+    color: #FFFFFF;
+    padding: 1em;
+    overflow: hidden;
+    clear: both;
+}
+.login-header_logout {
+    background: none;
+}
+
+
+
+/*
+Site footer
+*/
+
+.footer {
+    position: relative;
+    background: #2e3436;
+    color: #FFFFFF;
+    padding: 2em;
+    overflow: hidden;
+    height: 8em;
+    margin-top: -12em;
+}
+.footer__author-avatar {
+    float: left;
+    padding: 5px;
+    background: #fafafa;
+    border-radius: 4px;
+}
+.footer__author-name {
+    margin-left: 70px;
+    color: #FFFFFF;
+    font-size: 1.8em;
+    line-height: 1.3em;
+}
+.footer__author-description {
+    margin-left: 70px;
+    padding-top: 0.5em;
+    font-size: 1.2em;
+    font-style: italic;
+}
+.footer__author-description a {
+    color: #ffffff;
+}

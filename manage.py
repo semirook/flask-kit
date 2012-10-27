@@ -1,65 +1,45 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
     manage
     ~~~~~~
 
-    Set of some useful management commands
+    Set of some useful management commands.
 
     :copyright: (c) 2012 by Roman Semirook.
     :license: BSD, see LICENSE for more details.
 """
 
-import code
-from flaskext.script import Manager, Shell, Command, Option
-from kit.helpers import MainAppHelper, BlueprintsFactory
+import subprocess
+from flask.ext.script import Shell, Manager
+from app import app
+from base import User
+from ext import db
 
 
-app = MainAppHelper.get_app()
 manager = Manager(app)
 
 
-class iShell(Shell):
-    """Works with iPython >= 0.12"""
-
-    def run(self, no_ipython=False):
-        context = self.get_context()
-        if not no_ipython:
-            try:
-                from IPython.frontend.terminal.embed import InteractiveShellEmbed
-                ipython_shell = InteractiveShellEmbed()
-                return ipython_shell(global_ns=dict(), local_ns=context)
-            except ImportError:
-                pass
-
-        code.interact(self.banner, local=context)
+@manager.command
+def clean_pyc():
+    """Removes all *.pyc files from the project folder"""
+    clean_command = "find . -name *.pyc -delete".split()
+    subprocess.call(clean_command)
 
 
-class Blueprint(Command):
-    """Creates new blueprint package with the specified name"""
+@manager.command
+def init_data():
+    """Fish data for project"""
+    db.drop_all()
+    db.create_all()
 
-    def get_options(self):
-        return [Option('-n', '--name', dest='name', required=True)]
-
-    def run(self, name):
-        BlueprintsFactory(name).build()
-
-
-class NoseTests(Command):
-    """Nose test runner"""
-
-    def run(self):
-        try:
-            import nose
-            nose.run(argv=['nosetests'])
-        except ImportError:
-            pass
+    user = User(username='John Doe', email='john@doe.com', password='test')
+    user.save()
 
 
-manager.add_command("shell", iShell())
-manager.add_command("createblueprint", Blueprint())
-manager.add_command("test", NoseTests())
+manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': db}))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     manager.run()

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block page_title %}Flask Kit{% endblock %}</title>
+    {% block css %}
+        {% assets "css_base" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
+    {% endblock %}
+
+    {% block js %}
+        {% assets "js_base" %}
+            <script src="{{ ASSET_URL }}" type="text/javascript"></script>
+        {% endassets %}
+    {% endblock %}
+</head>
+
+<body>
+<div class="l-wrapper">
+    {% block login_header %}
+        {% include 'blocks/auth_header.html' %}
+    {% endblock %}
+    {% block messages %}
+        {% include 'blocks/messages.html' %}
+    {% endblock %}
+    <header class="header">
+        <hgroup class="header__logo-group">
+            <h1 class="header__logo"><a href="{{ url_for('base.front_page') }}">Flask Kit</a></h1>
+            <h2 class="header__site-remark">for great good</h2>
+        </hgroup>
+        {% block navigation %}
+            {% include 'blocks/navigation.html' %}
+        {% endblock %}
+    </header>
+
+    {% block content %}{% endblock %}
+    {% block paginator %}{% endblock %}
+
+    <div class="l-footer-crosspiece"></div>
+</div>
+
+{% block footer %}
+    {% include 'blocks/footer.html' %}
+{% endblock %}
+</body>
+</html>

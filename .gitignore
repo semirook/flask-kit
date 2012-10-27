@@ -1,4 +1,6 @@
-.DS_Store
-.idea
-env
+/.idea
 *.pyc
+.noseids
+.DS_Store
+/static/.webassets-cache
+/static/gen

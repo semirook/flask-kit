@@ -1,18 +1,31 @@
-Flaskit Changelog
+Flask Kit Changelog
 ===================
 
-Here you can see the Flaskit evolution.
+Here you can see the Flask Kit evolution.
+
+
+Version 0.4
+-----------
+- New clean and shiny project structure
+- Multi-apps support
+- Demo blueprints, extended set of pre-installed extensions
+- Templates demo, BEM layout, some good JS-libs inside
+- Flask-Assets for CSS and JS bundles
+- SQLAlchemy is out of the box (real world, bro)
+- Auth demo by Flask-Login extension
+- Deep testing is possible now
+- New versions of everything. Tested together
+- Extended settings
 
 
 Version 0.3.1
 -------------
 - Demo views and templates have been removed. These examples will be in docs
 - Helpers are more clear and clean now
-- `Flask-Testing` extention is the part of Flaskit
+- `Flask-Testing` extention is the part of Flask Kit
   You can find simple KitTestCase in the `kit.testing` module. Make love and tests
 - Nose runner is really good. Use it out of the box
 - Database object import in blueprints is fixed
-- `Flaskit` is more cool than `Flask-Kit`. Let it be.
 
 
 Version 0.3

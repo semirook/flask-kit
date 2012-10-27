@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+    <article class="page l-75-c">
+        <header class="page__header">
+            <h1 class="page__title">What the hell is it?</h1>
+        </header>
+        <div class="page__content">
+            <p>
+                Flask Kit is about Flask project organization.
+                It's not yet another Python web-framework, it's not some kind of battery and it's not a layer
+                on the top of original Flask.
+            </p>
+            <blockquote>
+                Flask Kit is extendable backbone for your new Flask projects and the set of useful helpers
+                to avoid some routine. That's it.
+            </blockquote>
+            <h2>The main idea of Flask Kit</h2>
+            <p>
+                Flask is not MVC framework but it's possible to bring some MVC experience with minimum set of
+                background magic, with nice and neat project structure and without circular import problems.
+            </p>
+        </div>
+    </article>
+
+    <hr class="l-75-c">
+
+    <article class="page l-75-c">
+        <header class="page__header">
+            <h1 class="page__title">I don't know what you are talking about!</h1>
+        </header>
+        <div class="page__content">
+            <p>
+                Know nothing about Flask? Or, maybe, you need some information to get start? Ok, first of all
+                visit <a href="https://github.com/semirook/flask-kit">Flask&nbsp;Kit GitHub page</a>.
+                Sure, you have to know Flask itself to write you wonderful web apps. Also, visit
+                <a href="http://flask.pocoo.org/extensions/">Flask&nbsp;extensions</a> page, don't write everything
+                by yourself.
+            </p>
+            <aside class="page__errata">
+                <ul class="page__errata-list">
+                    <li class="page__errata-item"><sup>1)</sup><a href="http://flask.pocoo.org/">Flask main page</a></li>
+                    <li class="page__errata-item"><sup>2)</sup><a href="http://flask.pocoo.org/docs/">Flask docs</a></li>
+                    <li class="page__errata-item"><sup>3)</sup><a href="http://flask.pocoo.org/extensions/">Flask extensions</a></li>
+                </ul>
+            </aside>
+        </div>
+    </article>
+{% endblock %}

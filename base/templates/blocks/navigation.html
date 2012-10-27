@@ -1,0 +1,21 @@
+{% from "macros/form_helpers.html" import render_field %}
+
+
+<nav class="top-navigation l-75-c">
+    <ul class="top-navigation__list">
+        {% for nav_item in navigation %}
+            <li class="top-navigation__item{% if nav_item.url in request.path  %} top-navigation__item_active{% endif %}">
+                {% if request.path != nav_item.url %}
+                    <a href="{{ nav_item.url }}" class="top-navigation__item-link">
+                {% endif %}
+                <span class="top-navigation__item-link-text">{{ nav_item.name }}</span>
+                {% if nav_item.counter %}
+                    <sup class="top-navigation__item-counter">{{ nav_item.counter }}</sup>
+                {% endif %}
+                {% if request.path != nav_item.url %}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
