@@ -102,7 +102,16 @@ There is the application factory and, maybe, something else (in the future) to a
 
 ### testing.py
 
-Simple basic TestCase for your tests.
+Simple basic TestCase for your tests. Note, that `nose` test runner is used (it's really good).
+
+```
+(flaskit)MacBook-Pro-Roman:flaskit semirook$ nosetests
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.476s
+
+OK
+```
 
 
 ### settings.py
