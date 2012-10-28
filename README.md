@@ -1,4 +1,4 @@
-## What the Flask Kit is and what it is not
+## What the Flask Kit is and what is not
 
 **Flask Kit** is about [Flask](http://flask.pocoo.org/) project organization.
 It's not yet another Python web-framework, it's not some kind of battery 
