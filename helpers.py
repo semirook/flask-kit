@@ -12,6 +12,7 @@
 
 import os
 from flask import Flask
+from werkzeug.utils import import_string
 
 
 class NoContextProcessorException(Exception):
@@ -45,10 +46,8 @@ class AppFactory(object):
         return self.app
 
     def _get_imported_stuff_by_path(self, path):
-        mo_pa = path.split('.')
-        module_name = '.'.join(mo_pa[:-1])
-        object_name = mo_pa[-1]
-        module = __import__(module_name, fromlist=[object_name])
+        module_name, object_name = path.rsplit('.', 1)
+        module = import_string(module_name)
 
         return module, object_name
 
