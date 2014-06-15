@@ -11,6 +11,7 @@
 """
 
 from flask.ext.login import UserMixin
+from sqlalchemy.ext.declarative import declared_attr
 from werkzeug.security import generate_password_hash, check_password_hash
 from ext import db
 
@@ -18,7 +19,7 @@ from ext import db
 class CRUDMixin(object):
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer,db.Sequence('user_id_seq'),primary_key=True)
 
     @classmethod
     def get_by_id(cls, id):

@@ -1,13 +1,13 @@
 {% macro common_form_field(field) %}
-    <div class="common-form__field-wrapper">
+    <div class="">
         {% if field.label.text %}
-            <label class="common-form__label" for="{{ field.id }}">
-                {{ field.label.text }}: {% if field.flags.required %} *{% endif %}
+            <label class="info" for="{{ field.id }}">
+                {{ field.label.text }}: {% if field.flags.required %} <span style="color:red;">*</span>{% endif %}
             </label>
         {% endif %}
         {{ field(**kwargs) }}
         {% if field.errors %}
-            <div class="form-errors">
+            <div class="error">
                 <ul>
                     {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
                 </ul>

@@ -11,7 +11,7 @@
 """
 
 from flask.ext.debugtoolbar import DebugToolbarExtension
-from flask.ext.gravatar import Gravatar
+from gravatar import Gravatar
 from flask.ext.login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment
