@@ -4,15 +4,18 @@
     <meta charset="utf-8" />
     <title>{% block page_title %}Flask Kit{% endblock %}</title>
     {% block css %}
-        {% assets "css_base" %}
+    {#{% assets "css_base" %}
             <link rel="stylesheet" href="{{ ASSET_URL }}">
-        {% endassets %}
+            {% endassets %}#}
+            <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
     {% endblock %}
 
-    {% block js %}
+    {% block js %}{#
         {% assets "js_base" %}
             <script src="{{ ASSET_URL }}" type="text/javascript"></script>
-        {% endassets %}
+            {% endassets %}#}
     {% endblock %}
 </head>
 
@@ -42,6 +45,8 @@
 
 {% block footer %}
     {% include 'blocks/footer.html' %}
+         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 {% endblock %}
 </body>
 </html>

@@ -10,8 +10,9 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from flask.ext.wtf import Form, TextField, Required, PasswordField
-from wtforms.validators import Email
+from flask.ext.wtf import Form 
+from wtforms.fields import TextField,PasswordField
+from wtforms.validators import Email, Required
 
 
 class LoginForm(Form):

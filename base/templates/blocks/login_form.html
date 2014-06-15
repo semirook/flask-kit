@@ -2,13 +2,15 @@
 
 
 {% if current_user.is_anonymous() %}
-    <form action="{{ url_for('base.login') }}" method="POST" class="common-form">
+    <form action="{{ url_for('base.login') }}" method="POST" class="form">
         {{ form.hidden_tag() }}
-        {{ common_form_field(form.email, class_='input common-form__input') }}
-        {{ common_form_field(form.password, class_='input common-form__input') }}
-        <div class="common-form__field-wrapper">
-            <label class="common-form__label">&nbsp;</label>
-            <input type="submit" class="button common-form__submit" value="Log in">
+        {{ common_form_field(form.email, class_='form-control') }}
+        {{ common_form_field(form.password, class_='form-control') }}
+        <div class="wrapper">
+            <label class="label">&nbsp;</label>
+            <button type="submit" class="btn btn-primary" value="Log in">
+                Login
+            </button>
         </div>
     </form>
 {% else %}
