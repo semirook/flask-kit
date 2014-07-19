@@ -25,7 +25,6 @@ class FrontView(MethodView):
     def get(self):
         return render_template('base/main.html')
 
-base.add_url_rule('', view_func=FrontView.as_view('front_page'))
 
 
 class LoginView(MethodView):
@@ -53,7 +52,6 @@ class LoginView(MethodView):
 
         return redirect(request.args.get('next') or url_for('base.front_page'))
 
-base.add_url_rule('login', view_func=LoginView.as_view('login'))
 
 
 login_manager.login_view = 'base.login'
@@ -70,4 +68,3 @@ def logout():
     logout_user()
     return redirect(url_for('base.front_page'))
 
-base.add_url_rule('logout', view_func=logout, methods=['POST'])
