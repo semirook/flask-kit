@@ -3,6 +3,12 @@ Flask Kit Changelog
 
 Here you can see the Flask Kit evolution.
 
+Version 0.5
+------------
+- Django style Url Routing added to AppFactory - but with no regexp!
+- see base/urls.py for example required routes definition structure
+- added template-filter registration to AppFactory - define in settings just like extensions or context-processors
+- added baseviews file, contains BaseView and ModelView classes, subclass your views from here
 
 Version 0.4
 -----------

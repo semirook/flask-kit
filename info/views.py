@@ -20,4 +20,3 @@ class HelpPageView(MethodView):
     def get(self):
         return render_template('info/info_page.html')
 
-info.add_url_rule('', view_func=HelpPageView.as_view('help'))
