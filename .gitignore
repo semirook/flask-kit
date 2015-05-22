@@ -1,6 +1,7 @@
-/.idea
 *.pyc
+.idea
 .noseids
+.ropeproject
 .DS_Store
 /static/.webassets-cache
 /static/gen

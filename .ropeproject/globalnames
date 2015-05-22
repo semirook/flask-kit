@@ -1,10 +1,0 @@
-€}q(Uinfo]qUinfoqaUtests]Utesting]qUKitTestCaseqaU
-base.views]q(U	FrontViewqUlogoutqU	LoginViewq	U	load_userq
-eUsettings]q(UDevelopmentConfigqUTestingConfigqU
-BaseConfigqeUapp]q(Ujs_baseqUappqUcss_baseqUcss_base_bundleqUjs_base_bundleqeUmanage]q(UmanagerqU	clean_pycqU	init_dataqeUext]q(UassetsqUdbqUgravatarqUlogin_managerqUtoolbarqeU
-info.views]qUHelpPageViewq aUdatetime]q!(U	timedeltaq"UMAXYEARq#Udateq$Udatetime_CAPIq%Utzinfoq&Utimeq'UMINYEARq(Udatetimeq)eU
-base.tests]q*UTestFrontBlueprintq+aU
-base.forms]q,U	LoginFormq-aUbase.context_processors]q.(U
-navigationq/Ucommon_contextq0Ucommon_formsq1eUhelpers]q2(UNoExtensionExceptionq3UNoBlueprintExceptionq4U
-AppFactoryq5UNoContextProcessorExceptionq6eUbase.models]q7(U	CRUDMixinq8UUserq9eUbase]q:Ubaseq;aUshutil]q<(Ucopyfileq=Uignore_patternsq>Ucopytreeq?Uget_archive_formatsq@UcopyfileobjqAUregister_archive_formatqBUcopymodeqCUmake_archiveqDUmoveqEUunregister_archive_formatqFUrmtreeqGUErrorqHUcopyqIU	ExecErrorqJUcopy2qKUSpecialFileErrorqLUcopystatqMUWindowsErrorqNeUos]qO(Upopen4qPUexecleqQUpopen3qRUSEEK_CURqSUspawnlpqTUexeclpqUUenvironqVUspawnvpqWUspawnlqXUexecvpqYUmakedirsqZUlinesepq[UP_WAITq\Uspawnvq]Uspawnveq^Uexecvpeq_Uunsetenvq`USEEK_SETqaUgetenvqbUpopen2qcUwalkqdUspawnleqeUexeclqfUnameqgUSEEK_ENDqhUspawnlpeqiU	P_NOWAITOqjUP_NOWAITqkU
-removedirsqlUrenamesqmUspawnvpeqnUexeclpeqoeUtests.test_base]qpUTestFrontBlueprintqqaUtests.test_case]qrUKitTestCaseqsau.
