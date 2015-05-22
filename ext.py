@@ -28,3 +28,6 @@ api = Api(default='api')
 # Almost any modern Flask extension has special init_app()
 # method for deferred app binding. But there are a couple of
 # popular extensions that no nothing about such use case.
+# Or, maybe, you have to use some app.config settings
+
+# gravatar = lambda app: Gravatar(app, size=50)
