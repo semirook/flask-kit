@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
     testing
@@ -6,7 +6,7 @@
 
     More useful TestCase for tests.
 
-    :copyright: (c) 2012 by Roman Semirook.
+    :copyright: (c) 2015 by Roman Zaiev.
     :license: BSD, see LICENSE for more details.
 """
 

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
     base.tests
@@ -6,12 +6,12 @@
 
     Example tests.
 
-    :copyright: (c) 2012 by Roman Semirook.
+    :copyright: (c) 2015 by Roman Zaiev.
     :license: BSD, see LICENSE for more details.
 """
 
 from flask import url_for
-from testing import KitTestCase
+from test_case import KitTestCase
 
 
 class TestFrontBlueprint(KitTestCase):

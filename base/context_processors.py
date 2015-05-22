@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
     base.context_processors
@@ -7,7 +7,7 @@
     The most common context processors
     for the whole project.
 
-    :copyright: (c) 2012 by Roman Semirook.
+    :copyright: (c) 2015 by Roman Zaiev.
     :license: BSD, see LICENSE for more details.
 """
 
@@ -17,18 +17,21 @@ from ext import gravatar
 
 
 def common_context():
-    return {'gravatar': gravatar,
-            'my_email': 'semirook@gmail.com'
-            }
+    return {
+        'gravatar': gravatar,
+        'my_email': 'semirook@gmail.com'
+    }
 
 
 def navigation():
-    main_page = {'name': 'Main',
-                 'url': url_for('base.front_page'),
-                 }
-    projects_page = {'name': 'Help',
-                     'url': url_for('info.help'),
-                     }
+    main_page = {
+        'name': 'Main',
+        'url': url_for('base.front_page'),
+    }
+    projects_page = {
+        'name': 'Help',
+        'url': url_for('info.help'),
+    }
 
     return {'navigation': (main_page, projects_page)}
 

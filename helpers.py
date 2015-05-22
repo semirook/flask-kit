@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
     helpers
@@ -6,7 +6,7 @@
 
     Implements useful helpers.
 
-    :copyright: (c) 2012 by Roman Semirook.
+    :copyright: (c) 2015 by Roman Zaiev.
     :license: BSD, see LICENSE for more details.
 """
 
@@ -29,15 +29,17 @@ class NoExtensionException(Exception):
 
 class AppFactory(object):
 
-    def __init__(self, config, envvar='PROJECT_SETTINGS', bind_db_object=True):
+    def __init__(self, config=None, envvar='PROJECT_SETTINGS', bind_db_object=True):
         self.app_config = config
         self.app_envvar = os.environ.get(envvar, False)
         self.bind_db_object = bind_db_object
 
     def get_app(self, app_module_name, **kwargs):
         self.app = Flask(app_module_name, **kwargs)
-        self.app.config.from_object(self.app_config)
-        self.app.config.from_envvar(self.app_envvar, silent=True)
+        if self.app_config:
+            self.app.config.from_object(self.app_config)
+        if self.app_envvar:
+            self.app.config.from_object(self.app_envvar)
 
         self._bind_extensions()
         self._register_blueprints()
@@ -56,11 +58,14 @@ class AppFactory(object):
             module, e_name = self._get_imported_stuff_by_path(ext_path)
             if not hasattr(module, e_name):
                 raise NoExtensionException('No {e_name} extension found'.format(e_name=e_name))
+
             ext = getattr(module, e_name)
-            if getattr(ext, 'init_app', False):
+            if hasattr(ext, 'init_app'):
                 ext.init_app(self.app)
-            else:
+            elif callable(ext):
                 ext(self.app)
+            else:
+                raise NoExtensionException('{e_name} extension has no init_app. Can\'t initialize'.format(e_name=e_name))
 
     def _register_context_processors(self):
         for processor_path in self.app.config.get('CONTEXT_PROCESSORS', []):

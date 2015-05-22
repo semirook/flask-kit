@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
     manage
@@ -7,7 +7,7 @@
 
     Set of some useful management commands.
 
-    :copyright: (c) 2012 by Roman Semirook.
+    :copyright: (c) 2015 by Roman Zaiev.
     :license: BSD, see LICENSE for more details.
 """
 

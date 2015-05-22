@@ -9,11 +9,6 @@
         {% endassets %}
     {% endblock %}
 
-    {% block js %}
-        {% assets "js_base" %}
-            <script src="{{ ASSET_URL }}" type="text/javascript"></script>
-        {% endassets %}
-    {% endblock %}
 </head>
 
 <body>
@@ -43,5 +38,12 @@
 {% block footer %}
     {% include 'blocks/footer.html' %}
 {% endblock %}
+
+{% block js %}
+    {% assets "js_base" %}
+        <script src="{{ ASSET_URL }}" type="text/javascript"></script>
+    {% endassets %}
+{% endblock %}
+
 </body>
 </html>

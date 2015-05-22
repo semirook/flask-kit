@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
     base.views
@@ -6,7 +6,7 @@
 
     The most common views for the whole project.
 
-    :copyright: (c) 2012 by Roman Semirook.
+    :copyright: (c) 2015 by Roman Zaiev.
     :license: BSD, see LICENSE for more details.
 """
 
@@ -14,6 +14,7 @@ from flask.templating import render_template
 from flask.views import MethodView
 from flask import flash, redirect, request, url_for
 from flask.ext.login import login_user, login_required, logout_user
+
 from ext import login_manager
 from base import base
 from base.forms import LoginForm
@@ -29,10 +30,11 @@ base.add_url_rule('', view_func=FrontView.as_view('front_page'))
 
 
 class LoginView(MethodView):
-    _messages = {'success': 'You are the boss!',
-                 'invalid_auth': 'Who are you?',
-                 'invalid_form': 'Invalid form.',
-                 }
+    _messages = {
+        'success': 'You are the boss!',
+        'invalid_auth': 'Who are you?',
+        'invalid_form': 'Invalid form.',
+    }
 
     def get(self):
         return render_template('login.html', form=LoginForm())
@@ -54,7 +56,6 @@ class LoginView(MethodView):
         return redirect(request.args.get('next') or url_for('base.front_page'))
 
 base.add_url_rule('login', view_func=LoginView.as_view('login'))
-
 
 login_manager.login_view = 'base.login'
 login_manager.login_message = 'You have to log in to access this page.'

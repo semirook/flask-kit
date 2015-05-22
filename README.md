@@ -12,21 +12,21 @@ And it looks like this:
 ```
 /flaskit
     /blueprint
+        /templates
         __init__.py
         views.py
         models.py
         forms.py
         tests.py
         context_processors.py
-        /static
-        /templates
         ...
+    /static
+    /tests
     app.py
     ext.py
     helpers.py
     settings.py
     manage.py
-    testing.py
     reqs.pip
     ...
 ```
@@ -60,10 +60,10 @@ and I don't have to explain how to setup and use it.
 ## Run
 
 There is some demo data for you. Create it.  
-1. ```./manage.py init_data```
+1. ```PROJECT_SETTINGS=settings.DevelopmentConfig ./manage.py init_data```
 
 Run development server, and go to http://127.0.0.1:5000  
-2. ```./manage.py runserver```
+2. ```PROJECT_SETTINGS=settings.DevelopmentConfig ./manage.py runserver```
 
 Demo user login/password is john@doe.com/test.
 
@@ -71,7 +71,7 @@ Demo user login/password is john@doe.com/test.
 ## Configuration
 
 Flask Kit consists of some helpers, demo blueprints,
-`app.py`, `ext.py`, `helpers.py`, `manage.py`, `settings.py` and `testing.py` modules.
+`app.py`, `ext.py`, `helpers.py`, `manage.py` and `settings.py` modules.
 
 Let's take a look at each of them.
 
@@ -98,20 +98,6 @@ extensions there is some workaround. Look into the file for examples.
 ### helpers.py
 
 There is the application factory and, maybe, something else (in the future) to avoid routine.
-
-
-### testing.py
-
-Simple basic TestCase for your tests. Note, that `nose` test runner is used (it's really good).
-
-```
-(flaskit)MacBook-Pro-Roman:flaskit semirook$ nosetests
-...
-----------------------------------------------------------------------
-Ran 3 tests in 0.476s
-
-OK
-```
 
 
 ### settings.py

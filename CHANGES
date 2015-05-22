@@ -3,6 +3,12 @@ Flask Kit Changelog
 
 Here you can see the Flask Kit evolution.
 
+Version 0.4.1
+-------------
+- Updated dependencies and fixed imports
+- Explicit settings class path from the `PROJECT_SETTINGS` env var
+- Flask-RESTPlus out of the box
+
 
 Version 0.4
 -----------
