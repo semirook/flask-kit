@@ -11,7 +11,7 @@
 """
 
 from flask import url_for
-from test_case import KitTestCase
+from .test_case import KitTestCase
 
 
 class TestFrontBlueprint(KitTestCase):

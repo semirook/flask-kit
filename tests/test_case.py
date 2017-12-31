@@ -48,7 +48,7 @@ class KitTestCase(TestCase):
             msg_prefix + "Couldn't retrieve content: Response code was %d"
                          " (expected %d)" % (response.status_code, status_code))
 
-        real_count = response.data.count(text)
+        real_count = response.data.count(text.encode())
         if count is not None:
             self.assertEqual(real_count, count,
                 msg_prefix + "Found %d instances of '%s' in response"
