@@ -17,6 +17,7 @@ class BaseConfig(object):
     DEBUG = False
     SECRET_KEY = "MY_VERY_SECRET_KEY"
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     CSRF_ENABLED = True
     ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -31,8 +32,6 @@ class BaseConfig(object):
         'ext.login_manager',
         'ext.gravatar',
         'ext.toolbar',
-        # If you want Flask-RESTPlus out of the box
-        # 'ext.api',
     ]
 
     CONTEXT_PROCESSORS = [
@@ -50,9 +49,7 @@ class BaseConfig(object):
     ]
 
     JS_BASE_BUNDLE = [
-        'js/libs/jquery-1.11.3.js',
-        'js/libs/underscore-1.8.3.js',
-        'js/libs/backbone-1.2.0.js',
+        'js/vendors/jquery-3.3.1.js',
     ]
 
 

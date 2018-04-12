@@ -11,12 +11,13 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from flask.ext.assets import Bundle
+from flask_assets import Bundle
 from ext import assets
 from helpers import AppFactory
 
 
 app = AppFactory().get_app(__name__)
+
 
 css_base = Bundle(*app.config.get('CSS_BASE_BUNDLE', []), filters='cssmin', output='gen/base.css')
 assets.register('css_base', css_base)

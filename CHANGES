@@ -3,6 +3,14 @@ Flask Kit Changelog
 
 Here you can see the Flask Kit evolution.
 
+
+Version 0.4.2
+-------------
+
+- Updated requirements versions
+- Python 3 support
+
+
 Version 0.4.1
 -------------
 - Updated dependencies and fixed imports

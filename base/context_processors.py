@@ -12,6 +12,7 @@
 """
 
 from flask.helpers import url_for
+
 from base import LoginForm
 from ext import gravatar
 

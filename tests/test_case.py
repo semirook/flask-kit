@@ -11,10 +11,11 @@
 """
 
 from flask.ext.testing import TestCase
+
 from base import User
+from ext import db
 from helpers import AppFactory
 from settings import TestingConfig
-from ext import db
 
 
 class KitTestCase(TestCase):
@@ -31,8 +32,7 @@ class KitTestCase(TestCase):
         db.session.remove()
         db.drop_all()
 
-    def assertContains(self, response, text, count=None,
-                       status_code=200, msg_prefix=''):
+    def assertContains(self, response, text, count=None, status_code=200, msg_prefix=''):
         """
         Asserts that a response indicates that some content was retrieved
         successfully, (i.e., the HTTP status code was as expected), and that
@@ -44,15 +44,27 @@ class KitTestCase(TestCase):
         if msg_prefix:
             msg_prefix += ": "
 
-        self.assertEqual(response.status_code, status_code,
-            msg_prefix + "Couldn't retrieve content: Response code was %d"
-                         " (expected %d)" % (response.status_code, status_code))
+        self.assertEqual(
+            response.status_code,
+            status_code,
+            msg_prefix + (
+                "Couldn't retrieve content: Response code was %d "
+                "(expected %wd)" % (response.status_code, status_code)
+            )
+        )
 
         real_count = response.data.count(text.encode())
         if count is not None:
-            self.assertEqual(real_count, count,
-                msg_prefix + "Found %d instances of '%s' in response"
-                             " (expected %d)" % (real_count, text, count))
+            self.assertEqual(
+                real_count,
+                count,
+                msg_prefix + (
+                    "Found %d instances of '%s' in response "
+                    "(expected %d)" % (real_count, text, count)
+                )
+            )
         else:
-            self.assertTrue(real_count != 0,
-                msg_prefix + "Couldn't find '%s' in response" % text)
+            self.assertTrue(
+                real_count != 0,
+                msg_prefix + "Couldn't find '%s' in response" % text
+            )

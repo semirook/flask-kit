@@ -1,10 +1,10 @@
 {% from "macros/form_helpers.html" import common_form_field, login_form_field %}
 
 
-{% if current_user.is_anonymous() %}
+{% if current_user.is_anonymous %}
     <section class="login-header">
         <form action="{{ url_for('base.login') }}" method="POST" class="login-form">
-            {{ login_form.hidden_tag() }}
+            {{ login_form.csrf_token }}
             {{ login_form_field(login_form.email, class_='input login-form__input') }}
             {{ login_form_field(login_form.password, class_='input login-form__input') }}
             <input type="submit" class="button login-form__submit" value="Log in">
@@ -13,7 +13,7 @@
 {% else %}
     <section class="login-header login-header_logout">
         <form action="{{ url_for('base.logout') }}" method="POST" class="login-form">
-            {{ login_form.hidden_tag() }}
+            {{ login_form.csrf_token }}
             <input type="submit" class="button login-form__submit" value="Logout">
         </form>
     </section>

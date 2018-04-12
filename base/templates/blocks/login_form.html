@@ -1,9 +1,9 @@
 {% from "macros/form_helpers.html" import common_form_field %}
 
 
-{% if current_user.is_anonymous() %}
+{% if current_user.is_anonymous %}
     <form action="{{ url_for('base.login') }}" method="POST" class="common-form">
-        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
         {{ common_form_field(form.email, class_='input common-form__input') }}
         {{ common_form_field(form.password, class_='input common-form__input') }}
         <div class="common-form__field-wrapper">

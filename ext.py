@@ -10,12 +10,11 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from flask.ext.debugtoolbar import DebugToolbarExtension
-from flask.ext.gravatar import Gravatar
-from flask.ext.login import LoginManager
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.assets import Environment
-from flask.ext.restplus import Api
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_gravatar import Gravatar
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from flask_assets import Environment
 
 
 db = SQLAlchemy()
@@ -23,7 +22,6 @@ assets = Environment()
 login_manager = LoginManager()
 gravatar = Gravatar(size=50)
 toolbar = DebugToolbarExtension()
-api = Api(default='api')
 
 # Almost any modern Flask extension has special init_app()
 # method for deferred app binding. But there are a couple of

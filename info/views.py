@@ -12,6 +12,7 @@
 
 from flask.templating import render_template
 from flask.views import MethodView
+
 from info import info
 
 
